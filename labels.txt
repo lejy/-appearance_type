@@ -1,2 +1,2 @@
-0 my_girl/boy
-1 your_girl/boy
+0 사랑해요
+1 사랑하지않아요

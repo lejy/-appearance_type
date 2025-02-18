@@ -12,7 +12,7 @@ np.set_printoptions(suppress=True)
 model = load_model('keras_model.h5', compile=False)
 
 # Load the labels
-class_names = open('labels.txt', 'r').readlines()
+class_names = open('labels.txt', 'r', encoding='UTF-8').readlines()
 
 # 선택 옵션: 카메라 입력 또는 파일 업로드
 input_method = st.radio("이미지 입력 방식 선택", ["카메라 사용", "파일 업로드"])
@@ -72,5 +72,4 @@ if img_file_buffer is not None:
     # 예측 결과에서 신뢰도를 꺼내 옵니다  
     confidence_score = prediction[0][index]
 
-    st.write('Class:', class_name[2:], end="")
-    st.write('Confidence score:', confidence_score)
+    st.write("제 생각에는... ",int(float(confidence_score)*100),"% ", class_name[2:], end="")
