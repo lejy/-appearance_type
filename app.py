@@ -4,6 +4,9 @@ from keras.models import load_model
 from PIL import Image, ImageOps #Install pillow instead of PIL
 import numpy as np
 import streamlit as st
+import requests
+import os
+
 
 # Disable scientific notation for clarity
 np.set_printoptions(suppress=True)
@@ -70,13 +73,28 @@ if img_file_buffer is not None:
     class_name = class_names[index]
 
 
-    # 예측 결과에서 신뢰도를 꺼내 옵니다  
+    KAKAO_TOKEN = st.secrets["KAKAO_TOKEN"] # 환경 변수로 관리
+
+    def send_kakao_message(number):
+        url = "https://kapi.kakao.com/v2/api/talk/memo/default/send"
+        headers = {
+            "Authorization": f"Bearer {KAKAO_TOKEN}"
+        }
+        data = {
+            "template_object": '{"object_type":"text","text":"📞 새 연락처 도착: ' + number + '","link":{"web_url":"http://example.com"}}'
+        }
+        response = requests.post(url, headers=headers, data=data)
+        return response.status_code
+
     confidence_score = prediction[0][index]
     if class_name == class_names[0]:
-        st.write("제 생각에는... ",int(float(confidence_score)*100),"% ", class_name[2:], end="")
+        st.write("제 생각에는... ", int(float(confidence_score)*100), "% ", class_name)
         number = st.text_input("당신의 연락처를 적어주세요~")
         if number:
-            st.success("📞 조만간 연락드리겠습니다! 감사합니다! 😊")
+            response_code = send_kakao_message(number)
+            if response_code == 200:
+                st.success("📞 조만간 연락드리겠습니다! 감사합니다! 😊 (카카오톡 메시지 전송 완료)")
+            else:
+                st.error("카카오톡 메시지 전송 실패!")
     else:
-        st.write("제 생각에는... ",int(float(confidence_score)*100),"% ", class_name[2:], end="")
-       
+        st.write("제 생각에는... ", int(float(confidence_score)*100), "% ", class_name)
