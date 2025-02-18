@@ -16,7 +16,7 @@ model = load_model('keras_model.h5', compile=False)
 
 # Load the labels
 class_names = open('labels.txt', 'r', encoding='UTF-8').readlines()
-
+st.title("내 이상형을 찾아보아요~")
 # 선택 옵션: 카메라 입력 또는 파일 업로드
 input_method = st.radio("이미지 입력 방식 선택", ["카메라 사용", "파일 업로드"])
 
@@ -85,7 +85,7 @@ if img_file_buffer is not None:
         }
         response = requests.post(url, headers=headers, data=data)
         return response.status_code
-
+    
     confidence_score = prediction[0][index]
     if class_name == class_names[0]:
         st.write("제 생각에는... ", int((confidence_score)*100), "% ", class_name[1:])
