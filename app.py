@@ -69,7 +69,14 @@ if img_file_buffer is not None:
     # 좋아하는 만화 선택하세요 - 만화 제목(text 리스트)랑 img 경로 리스트 일치 시킬 때 인덱스 활용한 것과 같은 방법
     class_name = class_names[index]
 
+
     # 예측 결과에서 신뢰도를 꺼내 옵니다  
     confidence_score = prediction[0][index]
-
-    st.write("제 생각에는... ",int(float(confidence_score)*100),"% ", class_name[2:], end="")
+    if class_name == class_names[0]:
+        st.write("제 생각에는... ",int(float(confidence_score)*100),"% ", class_name[2:], end="")
+        number = st.text_input("당신의 연락처를 적어주세요~")
+        if number:
+            st.success("📞 조만간 연락드리겠습니다! 감사합니다! 😊")
+    else:
+        st.write("제 생각에는... ",int(float(confidence_score)*100),"% ", class_name[2:], end="")
+       
