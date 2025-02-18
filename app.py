@@ -88,7 +88,7 @@ if img_file_buffer is not None:
 
     confidence_score = prediction[0][index]
     if class_name == class_names[0]:
-        st.write("제 생각에는... ", int(float(confidence_score)*100), "% ", class_name)
+        st.write("제 생각에는... ", int((confidence_score)*100), "% ", class_name[1:])
         number = st.text_input("당신의 연락처를 적어주세요~")
         if number:
             response_code = send_kakao_message(number)
@@ -97,4 +97,4 @@ if img_file_buffer is not None:
             else:
                 st.error("카카오톡 메시지 전송 실패!")
     else:
-        st.write("제 생각에는... ", int(float(confidence_score)*100), "% ", class_name)
+        st.write("제 생각에는... ", int((confidence_score)*100), "% ", class_name[1:])
