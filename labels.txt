@@ -1,2 +1,2 @@
-0 제 스타일이에요
-1 제 스타일 아니에요
+0 my_girl/boy
+1 your_girl/boy

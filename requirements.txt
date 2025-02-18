@@ -1,4 +1,5 @@
 keras
 numpy
 streamlit
-tensorflow==2.16.1
+tensorflow==2.12
+python==3.10
